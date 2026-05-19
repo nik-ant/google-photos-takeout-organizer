@@ -177,33 +177,15 @@ Use a new output folder for each important run. This avoids mixing older test ou
 
 ## Useful Options
 
-`--dry-run`
-
-Preview the planned output without copying files.
-
-`--work-dir /path/to/temp-folder`
-
-Choose where zip archives are extracted temporarily.
-
-`--copy-sidecars`
-
-Copy Google Takeout JSON sidecars next to the organized media files.
-
-`--no-albums`
-
-Only create the chronological `Fotos/` folder.
-
-`--no-embed-metadata`
-
-Do not write metadata into copied media files, even if `exiftool` is installed.
-
-`--no-embedded-fallback`
-
-Skip reading embedded media timestamps during scanning. This is useful only for fast folder-layout tests. Do not use it for final runs, because older videos may be placed incorrectly without embedded metadata fallback.
-
-`--verbose`
-
-Print every planned or copied file path.
+| Option | Description |
+| --- | --- |
+| `--dry-run` | Preview the planned output without copying files. |
+| `--work-dir /path/to/temp-folder` | Choose where zip archives are extracted temporarily. |
+| `--copy-sidecars` | Copy Google Takeout JSON sidecars next to the organized media files. |
+| `--no-albums` | Only create the chronological `Fotos/` folder. |
+| `--no-embed-metadata` | Do not write metadata into copied media files, even if `exiftool` is installed. |
+| `--no-embedded-fallback` | Skip reading embedded media timestamps during scanning. Useful only for fast folder-layout tests. Do not use it for final runs, because older videos may be placed incorrectly without embedded metadata fallback. |
+| `--verbose` | Print every planned or copied file path. |
 
 ## Live Photos
 
