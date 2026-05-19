@@ -89,57 +89,91 @@ Folders such as `Belgium (Bruges)`, `Paris 2022 Trip`, or `Dubai (UAE)` are trea
 - Python 3.10 or newer
 - Optional but recommended: `exiftool`
 
-Install `exiftool` on macOS:
+Install requirements:
 
-```bash
-brew install exiftool
-```
+| System | Python | ExifTool |
+| --- | --- | --- |
+| macOS | `brew install python` | `brew install exiftool` |
+| Linux, Debian/Ubuntu | `sudo apt install python3` | `sudo apt install libimage-exiftool-perl` |
+| Linux, Fedora | `sudo dnf install python3` | `sudo dnf install perl-Image-ExifTool` |
+| Windows, winget | `winget install Python.Python.3` | `winget install OliverBetz.ExifTool` |
+| Windows, Chocolatey | `choco install python` | `choco install exiftool` |
+
+After installation, verify:
+
+| System | Command |
+| --- | --- |
+| macOS/Linux | `python3 --version` |
+| Windows | `py --version` |
+| All systems | `exiftool -ver` |
 
 ## Basic Usage
 
-From the project folder:
+Download or clone this repository, then open a terminal in the project folder.
 
-```bash
-cd "/Users/nik-ant/Visual Studio Code Projects/Google Photos Takeout Organizer"
-```
+| System | Example project folder command |
+| --- | --- |
+| macOS/Linux | `cd ~/Projects/google-photos-takeout-organizer` |
+| Windows PowerShell | `cd "$HOME\Projects\google-photos-takeout-organizer"` |
 
 Run a dry run first. A dry run prints what would happen without copying files:
 
-```bash
-python3 organize_google_photos_takeout.py \
-  -i "/path/to/takeout.zip" \
-  -o "/path/to/organized-output" \
-  --dry-run
-```
+| System | Dry run command |
+| --- | --- |
+| macOS/Linux | `python3 organize_google_photos_takeout.py -i "/path/to/takeout.zip" -o "/path/to/organized-output" --dry-run` |
+| Windows PowerShell | `py organize_google_photos_takeout.py -i "C:\Path\To\takeout.zip" -o "C:\Path\To\organized-output" --dry-run` |
 
 Run the real copy:
 
-```bash
-python3 organize_google_photos_takeout.py \
-  -i "/path/to/takeout.zip" \
-  -o "/path/to/organized-output"
-```
+| System | Real run command |
+| --- | --- |
+| macOS/Linux | `python3 organize_google_photos_takeout.py -i "/path/to/takeout.zip" -o "/path/to/organized-output"` |
+| Windows PowerShell | `py organize_google_photos_takeout.py -i "C:\Path\To\takeout.zip" -o "C:\Path\To\organized-output"` |
 
 You can also pass an already extracted Google Photos folder:
 
-```bash
-python3 organize_google_photos_takeout.py \
-  -i "/path/to/Takeout/Google Fotos" \
-  -o "/path/to/organized-output"
-```
+| System | Extracted folder command |
+| --- | --- |
+| macOS/Linux | `python3 organize_google_photos_takeout.py -i "/path/to/Takeout/Google Photos" -o "/path/to/organized-output"` |
+| Windows PowerShell | `py organize_google_photos_takeout.py -i "C:\Path\To\Takeout\Google Photos" -o "C:\Path\To\organized-output"` |
 
 ## Recommended Command For Large Zip Exports
 
 For large zip files, use `--work-dir` so temporary extraction happens in a known temporary location:
 
-```bash
-python3 organize_google_photos_takeout.py \
-  -i "/Volumes/T9/Photos & Pictures/Google Backup/takeout-20260506T230148Z-3-001.zip" \
-  -o "/Volumes/T9/Photos & Pictures/Google Backup/organized-final" \
-  --work-dir /private/tmp/google-takeout-final
-```
+| System | Large zip command |
+| --- | --- |
+| macOS | `python3 organize_google_photos_takeout.py -i "/path/to/takeout.zip" -o "/path/to/organized-output" --work-dir /tmp/google-takeout-work` |
+| Linux | `python3 organize_google_photos_takeout.py -i "/path/to/takeout.zip" -o "/path/to/organized-output" --work-dir /tmp/google-takeout-work` |
+| Windows PowerShell | `py organize_google_photos_takeout.py -i "C:\Path\To\takeout.zip" -o "C:\Path\To\organized-output" --work-dir "$env:TEMP\google-takeout-work"` |
 
 Use a new output folder for each important run. This avoids mixing older test output with new results.
+
+## Example Workflows
+
+### macOS
+
+| Step | Command |
+| --- | --- |
+| Open project | `cd ~/Projects/google-photos-takeout-organizer` |
+| Preview | `python3 organize_google_photos_takeout.py -i "$HOME/Downloads/takeout.zip" -o "$HOME/Pictures/Google Photos Organized" --dry-run` |
+| Organize | `python3 organize_google_photos_takeout.py -i "$HOME/Downloads/takeout.zip" -o "$HOME/Pictures/Google Photos Organized" --work-dir /tmp/google-takeout-work` |
+
+### Linux
+
+| Step | Command |
+| --- | --- |
+| Open project | `cd ~/Projects/google-photos-takeout-organizer` |
+| Preview | `python3 organize_google_photos_takeout.py -i "$HOME/Downloads/takeout.zip" -o "$HOME/Pictures/google-photos-organized" --dry-run` |
+| Organize | `python3 organize_google_photos_takeout.py -i "$HOME/Downloads/takeout.zip" -o "$HOME/Pictures/google-photos-organized" --work-dir /tmp/google-takeout-work` |
+
+### Windows PowerShell
+
+| Step | Command |
+| --- | --- |
+| Open project | `cd "$HOME\Projects\google-photos-takeout-organizer"` |
+| Preview | `py organize_google_photos_takeout.py -i "$HOME\Downloads\takeout.zip" -o "$HOME\Pictures\Google Photos Organized" --dry-run` |
+| Organize | `py organize_google_photos_takeout.py -i "$HOME\Downloads\takeout.zip" -o "$HOME\Pictures\Google Photos Organized" --work-dir "$env:TEMP\google-takeout-work"` |
 
 ## Useful Options
 
@@ -213,30 +247,32 @@ Use this report to review files in `Files Without Metadata/`.
 
 ### `Input does not exist`
 
-Check that the external drive is mounted and the path is correct:
+Check that the path exists:
 
-```bash
-ls "/Volumes/T9/Photos & Pictures/Google Backup"
-```
+| System | Command |
+| --- | --- |
+| macOS/Linux | `ls "/path/to/takeout-folder"` |
+| Windows PowerShell | `Test-Path "C:\Path\To\takeout.zip"` |
 
 ### `PermissionError` while extracting a zip
 
 Use `--work-dir`:
 
-```bash
-python3 organize_google_photos_takeout.py \
-  -i "/path/to/takeout.zip" \
-  -o "/path/to/organized-output" \
-  --work-dir /private/tmp/google-takeout-work
-```
+| System | Command |
+| --- | --- |
+| macOS/Linux | `python3 organize_google_photos_takeout.py -i "/path/to/takeout.zip" -o "/path/to/organized-output" --work-dir /tmp/google-takeout-work` |
+| Windows PowerShell | `py organize_google_photos_takeout.py -i "C:\Path\To\takeout.zip" -o "C:\Path\To\organized-output" --work-dir "$env:TEMP\google-takeout-work"` |
 
 ### Videos appear in the wrong year
 
 Install `exiftool` and run again without `--no-embedded-fallback`:
 
-```bash
-brew install exiftool
-```
+| System | Command |
+| --- | --- |
+| macOS | `brew install exiftool` |
+| Debian/Ubuntu | `sudo apt install libimage-exiftool-perl` |
+| Fedora | `sudo dnf install perl-Image-ExifTool` |
+| Windows, winget | `winget install OliverBetz.ExifTool` |
 
 ### Warnings about invalid HEIC files
 
