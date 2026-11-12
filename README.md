@@ -50,6 +50,3 @@ organized-photos/
 - [Metadata and localization](docs/metadata-and-localization.md): date and GPS handling, report details, and recognized folder names.
 - [Troubleshooting](docs/troubleshooting.md): common input, extraction, and media metadata issues.
 
-## Photos Viewer
-
-The local browser-based photo viewer has been split into a separate `Photos Viewer` project. This repository now contains only the Google Photos Takeout organizer script and its documentation.
